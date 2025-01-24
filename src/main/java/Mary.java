@@ -36,6 +36,9 @@ public class Mary {
                 case "bye":
                     this.exit();
                     break;
+                default:
+                    System.out.println(
+                            "Sorry I don't quite understand what you are saying, please use a different command!");
             }
 
             this.printNewline();
@@ -43,39 +46,6 @@ public class Mary {
             if (command.equals("bye")) {
                 break;
             }
-
-            // if (splitInput.length < 2) {
-            // if (splitInput[0].equals("bye")) {
-            // System.out.println("Bye. Hope to see you again soon!");
-            // System.out.println("_________________________________________________________\n");
-            // break;
-            // }
-            // if (splitInput[0].equals("list")) {
-            // for (int count = 0; (count < 100) && (storage[count] != null); count++) {
-            // System.out.println((count + 1) + ". " + storage[count].toString());
-            // }
-            // System.out.println("_________________________________________________________\n");
-            // continue;
-            // }
-            // }
-
-            // if (splitInput[0].equals("mark") || splitInput[0].equals("unmark")) {
-            // if (splitInput[1].matches("\\d+")) {
-            // int index = Integer.parseInt(splitInput[1]);
-            // if (splitInput[0].equals("mark")) {
-            // storage[index - 1].mark();
-            // } else {
-            // storage[index - 1].unmark();
-            // }
-            // System.out.println("_________________________________________________________\n");
-            // continue;
-            // }
-            // }
-
-            // System.out.println("added: " + input);
-            // storage[counter] = new Task(input);
-            // counter++;
-            // System.out.println("_________________________________________________________\n");
         }
         scanner.close();
     }
@@ -122,26 +92,38 @@ public class Mary {
     }
 
     public void addToDoTask(String[] input) {
-        storage[counter] = new Todo(input[1]);
-        this.printTask();
+        try {
+            storage[counter] = new Todo(input[1]);
+            this.printTask();
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Description of tasks cannot be empty!");
+        }
     }
 
     public void addDeadlineTask(String[] input) {
-        String[] extractDay = input[1].split("/");
-        storage[counter] = new Deadline(extractDay[0].trim(), extractDay[1]);
-        this.printTask();
+        try {
+            String[] extractDay = input[1].split("/");
+            storage[counter] = new Deadline(extractDay[0].trim(), extractDay[1]);
+            this.printTask();
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Description of tasks or deadline cannot be empty!");
+        }
     }
 
     public void addEventTask(String[] input) {
-        String[] extractDay = input[1].split("/");
-        storage[counter] = new Event(extractDay[0].trim(), extractDay[1], extractDay[2]);
-        this.printTask();
+        try {
+            String[] extractDay = input[1].split("/");
+            storage[counter] = new Event(extractDay[0].trim(), extractDay[1], extractDay[2]);
+            this.printTask();
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Description of tasks or time of task cannot be empty!");
+        }
     }
 
     public static void main(String[] args) {
         Mary mary = new Mary();
-        String welcome = "Hello! I'm Mary \n"
-                + "What can I do for you? \n\n"
+        String welcome = "Hello! I'm Mary\n"
+                + "What can I do for you?\n\n"
                 + "----------------------------";
 
         System.out.println(welcome);
