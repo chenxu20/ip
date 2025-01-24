@@ -36,6 +36,9 @@ public class Mary {
                 case "bye":
                     this.exit();
                     break;
+                case "delete":
+                    this.deleteTask(splitInput);
+                    break;
                 default:
                     System.out.println(
                             "Sorry I don't quite understand what you are saying, please use a different command!");
@@ -117,6 +120,21 @@ public class Mary {
             this.printTask();
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Description of tasks or time of task cannot be empty!");
+        }
+    }
+
+    public void deleteTask(String[] input) {
+        try {
+            int index = Integer.parseInt(input[1]);
+            System.out.println("Noted. I've removed this task:");
+            System.out.println(storage[index - 1].toString());
+            for (int count = index; count < counter; count++) {
+                storage[count - 1] = storage[count];
+            }
+            storage[--counter] = null;
+            this.printNumberofTasks();
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Task does not exist!");
         }
     }
 
