@@ -1,9 +1,14 @@
-public class Task {
-    boolean completed = false;
-    String taskname;
+public abstract class Task {
+    private boolean completed;
+    private String taskname;
 
-    public Task(String taskname) {
+    public Task(String taskname, int completed) {
         this.taskname = taskname;
+        if (completed == 1) {
+            this.completed = true;
+        } else {
+            this.completed = false;
+        }
     }
 
     public void mark() {
@@ -22,4 +27,14 @@ public class Task {
         }
         return "[ ] " + this.taskname;
     }
+
+    public String printName() {
+        return this.taskname;
+    }
+
+    public boolean printCompletionStatus() {
+        return this.completed;
+    }
+
+    public abstract String writeTask();
 }
