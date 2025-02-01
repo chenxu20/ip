@@ -1,9 +1,9 @@
 public class Deadline extends Task {
-    String deadline;
+    private String deadline;
 
-    public Deadline(String des, String deadline) {
-        super(des);
-        this.deadline = deadline.split(" ", 2)[1];
+    public Deadline(String des, int completed, String deadline) {
+        super(des, completed);
+        this.deadline = deadline;
     }
 
     public void mark() {
@@ -18,5 +18,10 @@ public class Deadline extends Task {
 
     public String toString() {
         return "[D]" + super.toString() + " (by: " + this.deadline + ")";
+    }
+
+    @Override
+    public String writeTask() {
+        return "D|" + (super.printCompletionStatus() ? 1 : 0) + "|" + super.printName() + "|" + this.deadline;
     }
 }

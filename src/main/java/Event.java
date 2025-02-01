@@ -1,11 +1,11 @@
 public class Event extends Task {
-    String start;
-    String end;
+    private String start;
+    private String end;
 
-    public Event(String des, String start, String end) {
-        super(des);
-        this.start = start.split(" ", 2)[1].trim();
-        this.end = end.split(" ", 2)[1].trim();
+    public Event(String des, int completed, String start, String end) {
+        super(des, completed);
+        this.start = start;
+        this.end = end;
     }
 
     public void mark() {
@@ -20,5 +20,11 @@ public class Event extends Task {
 
     public String toString() {
         return "[E]" + super.toString() + " (from: " + this.start + " to: " + this.end + ")";
+    }
+
+    @Override
+    public String writeTask() {
+        return "D|" + (super.printCompletionStatus() ? 1 : 0) + "|" + super.printName() + "|" + this.start + "|"
+                + this.end;
     }
 }

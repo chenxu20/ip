@@ -1,7 +1,7 @@
 public class Todo extends Task {
 
-    public Todo(String input) {
-        super(input);
+    public Todo(String input, int completed) {
+        super(input, completed);
     }
 
     public void mark() {
@@ -16,5 +16,10 @@ public class Todo extends Task {
 
     public String toString() {
         return "[T]" + super.toString();
+    }
+
+    @Override
+    public String writeTask() {
+        return "T|" + (super.printCompletionStatus() ? 1 : 0) + "|" + super.printName();
     }
 }
