@@ -3,6 +3,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.io.FileWriter;
+import java.time.DateTimeException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 public class Mary {
 
@@ -24,11 +28,13 @@ public class Mary {
                         storage.add(new Todo(taskStatus[2], Integer.parseInt(taskStatus[1])));
                         break;
                     case "D":
-                        storage.add(new Deadline(taskStatus[2], Integer.parseInt(taskStatus[1]), taskStatus[3]));
+                        storage.add(new Deadline(taskStatus[2], Integer.parseInt(taskStatus[1]),
+                                LocalDateTime.parse(taskStatus[3])));
                         break;
                     case "E":
-                        storage.add(new Event(taskStatus[2], Integer.parseInt(taskStatus[1]), taskStatus[3],
-                                taskStatus[4]));
+                        storage.add(new Event(taskStatus[2], Integer.parseInt(taskStatus[1]),
+                                LocalDateTime.parse(taskStatus[3]),
+                                LocalDateTime.parse(taskStatus[4])));
                         break;
                 }
             }
@@ -135,11 +141,19 @@ public class Mary {
     }
 
     public void markTask(String[] input) {
-        storage.get(Integer.parseInt(input[1]) - 1).mark();
+        try {
+            storage.get(Integer.parseInt(input[1]) - 1).mark();
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("There are no tasks at this position!");
+        }
     }
 
     public void unmarkTask(String[] input) {
-        storage.get(Integer.parseInt(input[1]) - 1).unmark();
+        try {
+            storage.get(Integer.parseInt(input[1]) - 1).unmark();
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("There are no tasks at this position!");
+        }
     }
 
     public void addToDoTask(String[] input) {
@@ -154,21 +168,62 @@ public class Mary {
     public void addDeadlineTask(String[] input) {
         try {
             String[] extractDay = input[1].split("/");
-            storage.add(new Deadline(extractDay[0].trim(), 0, extractDay[1].split(" ", 2)[1]));
+
+            String[] deadlineDateTime = extractDay[1].split(" ");
+            String deadlineDate = deadlineDateTime[1];
+            String deadlineTime = deadlineDateTime[2];
+            LocalDateTime deadline = LocalDateTime.parse(deadlineDate + "T" + deadlineTime + ":00");
+
+            storage.add(new Deadline(extractDay[0].trim(), 0, deadline));
             this.printTask();
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Description of tasks or deadline cannot be empty!");
+            System.out.println("Format of task deadline: \\\"/by YYYY-MM-DD HH:MM\\\"");
+        } catch (DateTimeException e) {
+            System.out.println("Format of start or end date is wrong!");
+            System.out.println("Correct Format: \"/by YYYY-MM-DD HH:MM\"");
         }
     }
 
     public void addEventTask(String[] input) {
         try {
             String[] extractDay = input[1].split("/");
-            storage.add(new Event(extractDay[0].trim(), 0, extractDay[1].split(" ", 2)[1].trim(),
-                    extractDay[2].split(" ", 2)[1].trim()));
+
+            String[] startDateTime = extractDay[1].split(" ");
+            String startDate = startDateTime[1];
+            String startTime = startDateTime[2];
+            LocalDateTime start = LocalDateTime.parse(startDate + "T" + startTime + ":00");
+
+            String[] endDateTime = extractDay[2].split(" ");
+            String endDate;
+            String endTime;
+            if (endDateTime.length == 2) {
+                endDate = startDate;
+                endTime = endDateTime[1];
+            } else if (endDateTime.length == 3) {
+                endDate = endDateTime[1];
+                endTime = endDateTime[2];
+            } else {
+                throw new DateTimeException(null);
+            }
+            LocalDateTime end = LocalDateTime.parse(endDate + "T" + endTime + ":00");
+
+            if (end.isBefore(start)) {
+                throw new MaryException("End date cannot be before start date!");
+            }
+
+            storage.add(new Event(extractDay[0].trim(), 0, start, end));
             this.printTask();
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Description of tasks or time of task cannot be empty!");
+            System.out.println(
+                    "Format of event duration: \"/from YYYY-MM-DD HH:MM /to YYYY-MM-DD HH:MM\", or you can omit the end date if it is the same as the starting date");
+        } catch (DateTimeException e) {
+            System.out.println("Format of start or end date is wrong!");
+            System.out.println(
+                    "Correct Format: \"/from YYYY-MM-DD HH:MM /to YYYY-MM-DD HH:MM\", or you can omit the end date if it is the same as the starting date");
+        } catch (MaryException e) {
+            System.out.println(e.getMessage());
         }
     }
 
@@ -177,9 +232,6 @@ public class Mary {
             int index = Integer.parseInt(input[1]);
             System.out.println("Noted. I've removed this task:");
             System.out.println(storage.get(index - 1).toString());
-            // for (int count = index; count < counter; count++) {
-            // storage[count - 1] = storage[count];
-            // }
             storage.remove(index - 1);
             this.printNumberofTasks();
         } catch (ArrayIndexOutOfBoundsException e) {
