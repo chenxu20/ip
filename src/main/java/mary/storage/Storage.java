@@ -1,3 +1,12 @@
+package mary.storage;
+
+import mary.exception.MaryException;
+import mary.task.Task;
+import mary.task.TaskList;
+import mary.task.Todo;
+import mary.task.Deadline;
+import mary.task.Event;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;

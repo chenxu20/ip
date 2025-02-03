@@ -1,3 +1,5 @@
+package mary.task;
+
 public abstract class Task {
     private boolean completed;
     private String taskname;

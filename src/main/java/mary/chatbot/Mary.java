@@ -1,3 +1,11 @@
+package mary.chatbot;
+
+import mary.storage.Storage;
+import mary.task.TaskList;
+import mary.ui.Ui;
+import mary.exception.MaryException;
+import mary.parser.Parser;
+
 import java.util.Scanner;
 
 public class Mary {
@@ -94,6 +102,6 @@ public class Mary {
     }
 
     public static void main(String[] args) {
-        new Mary("../Task.txt").run();
+        new Mary("./Task.txt").run();
     }
 }
