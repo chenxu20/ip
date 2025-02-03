@@ -1,3 +1,5 @@
+package mary.ui;
+
 public class Ui {
 
     public void showLoadingError() {

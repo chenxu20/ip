@@ -1,3 +1,5 @@
+package mary.task;
+
 public class Todo extends Task {
 
     public Todo(String input, int completed) {
