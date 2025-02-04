@@ -8,12 +8,23 @@ import mary.parser.Parser;
 
 import java.util.Scanner;
 
+/**
+ * A chatbot that helps to organise and manage list of tasks that users key in.
+ * Mary keeps track of a list of tasks in <code>TaskList</code> which is stored
+ * locally on the computer.
+ */
 public class Mary {
 
     private Storage storage;
     private TaskList tasks;
     private Ui ui;
 
+    /**
+     * Initialises TaskList by based on the input filepath.
+     * 
+     * @param filePath filepath to where the file containing list of tasks is
+     *                 located.
+     */
     public Mary(String filePath) {
         this.ui = new Ui();
         this.storage = new Storage(filePath);
@@ -25,6 +36,10 @@ public class Mary {
         }
     }
 
+    /**
+     * Provides entry to the chatbot, and allows interaction between program and
+     * users.
+     */
     public void run() {
         Scanner inputScanner = new Scanner(System.in);
         this.ui.welcomeMessage();

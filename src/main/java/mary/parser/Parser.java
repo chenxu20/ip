@@ -9,16 +9,42 @@ import mary.exception.MaryException;
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
 
+/**
+ * Parses input from users to ensure that the right commands are given to the
+ * chatbot. Creates tasks accordingly after ensuring that input is valid.
+ */
 public class Parser {
 
+    /**
+     * Takes in raw input from the user to return the first word which is the
+     * command.
+     * 
+     * @param input Raw input from the user.
+     * @return A word to check if it is in the valid list of commands.
+     */
     public static String parseInput(String input) {
         return input.split(" ", 2)[0].toLowerCase();
     }
 
+    /**
+     * Helps to add a ToDo task to the list of tasks.
+     * 
+     * @param input    Task description.
+     * @param taskList An instance of the TaskList containing the list of tasks.
+     */
     public static void parseToDo(String input, TaskList taskList) {
         taskList.addToDoTask(new Todo(input, 0));
     }
 
+    /**
+     * Helps to add a Deadline task to the list of tasks.
+     * 
+     * @param input    String containing task description and the deadline of the
+     *                 task.
+     * @param taskList An instance of the TaskList containing the list of tasks.
+     * @throws MaryException If format of string is incorrect due to missing task
+     *                       description or invalid date and time format.
+     */
     public static void parseDeadline(String input, TaskList taskList) throws MaryException {
         try {
             String[] extractTaskDetails = input.split("/");
@@ -43,6 +69,15 @@ public class Parser {
         }
     }
 
+    /**
+     * Helps to add an Event task to the list of tasks.
+     * 
+     * @param input    String containing task description, the starting date of the
+     *                 task and the ending date of the task.
+     * @param taskList An instance of the TaskList containing the list of tasks.
+     * @throws MaryException If format of string is incorrect due to missing task
+     *                       description or invalid date and time format.
+     */
     public static void parseEvent(String input, TaskList taskList) throws MaryException {
         try {
             String[] extractTaskDetails = input.split("/");
