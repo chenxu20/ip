@@ -44,6 +44,8 @@ public class TaskList {
             taskList.get(Integer.parseInt(input) - 1).mark();
         } catch (IndexOutOfBoundsException e) {
             System.out.println("There are no tasks at this position!");
+        } catch (NumberFormatException e) {
+            System.out.println("Enter a valid numerical index!");
         }
     }
 
@@ -52,6 +54,8 @@ public class TaskList {
             taskList.get(Integer.parseInt(input) - 1).unmark();
         } catch (IndexOutOfBoundsException e) {
             System.out.println("There are no tasks at this position!");
+        } catch (NumberFormatException e) {
+            System.out.println("Enter a valid numerical index!");
         }
     }
 
@@ -79,6 +83,8 @@ public class TaskList {
             this.printNumberofTasks();
         } catch (IndexOutOfBoundsException e) {
             System.out.println("There are no tasks at this position!");
+        } catch (NumberFormatException e) {
+            System.out.println("Enter a valid numerical index!");
         }
     }
 }
