@@ -1,12 +1,12 @@
 package mary.chatbot;
 
+import java.util.Scanner;
+
+import mary.exception.MaryException;
+import mary.parser.Parser;
 import mary.storage.Storage;
 import mary.task.TaskList;
 import mary.ui.Ui;
-import mary.exception.MaryException;
-import mary.parser.Parser;
-
-import java.util.Scanner;
 
 public class Mary {
 
@@ -83,6 +83,12 @@ public class Mary {
                         }
                         this.tasks.deleteTask(splitInput[1]);
                         storage.store(this.tasks);
+                        break;
+                    case "find":
+                        if (splitInput.length < 2) {
+                            throw new MaryException("Key in what you want to find!");
+                        }
+                        this.tasks.findTask(splitInput[1]);
                         break;
                     default:
                         System.out.println(
