@@ -14,15 +14,32 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Handles both the storage and reading of the list of tasks locally in the
+ * user's computer.
+ */
 public class Storage {
 
     private File taskFile;
     private ArrayList<Task> taskList = new ArrayList<>();
 
+    /**
+     * Obtains an instance of File from the given filepath input.
+     * 
+     * @param filePath Indicates where the file should be stored/is stored.
+     */
     public Storage(String filePath) {
         this.taskFile = new File(filePath);
     }
 
+    /**
+     * Loads the list of tasks from the hard drive into the program.
+     * 
+     * @return A list of tasks that was stored locally on the computer from previous
+     *         runs, or initialises an empty list of tasks if the current run is the
+     *         first run.
+     * @throws MaryException When file reading is unsuccessful.
+     */
     public ArrayList<Task> load() throws MaryException {
         try {
             taskFile.createNewFile();
@@ -55,6 +72,11 @@ public class Storage {
         return taskList;
     }
 
+    /**
+     * Stores the list of tasks in the program back to the hard drive.
+     * 
+     * @param taskList Obtains TaskList containing list of tasks from the program.
+     */
     public void store(TaskList taskList) {
         try {
             FileWriter taskWriter = new FileWriter(this.taskFile);

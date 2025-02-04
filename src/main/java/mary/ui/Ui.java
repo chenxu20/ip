@@ -1,5 +1,8 @@
 package mary.ui;
 
+/**
+ * A class which provides prompts and messages for the user.
+ */
 public class Ui {
 
     public void showLoadingError() {
