@@ -39,6 +39,7 @@ public abstract class Task {
         System.out.println("OK, I've marked this task as not done yet:");
     }
 
+    @Override
     public String toString() {
         if (this.completed) {
             return "[X] " + this.taskName;

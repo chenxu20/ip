@@ -9,6 +9,9 @@ public class Ui {
         System.out.println("There is some issue, please restart the program");
     }
 
+    /**
+     * Prints welcome message to user.
+     */
     public void welcomeMessage() {
         String welcome = "Hello! I'm Mary\n"
                 + "What can I do for you?\n\n"
