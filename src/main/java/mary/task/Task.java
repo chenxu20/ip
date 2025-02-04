@@ -2,10 +2,10 @@ package mary.task;
 
 public abstract class Task {
     private boolean completed;
-    private String taskname;
+    private String taskName;
 
-    public Task(String taskname, int completed) {
-        this.taskname = taskname;
+    public Task(String taskName, int completed) {
+        this.taskName = taskName;
         if (completed == 1) {
             this.completed = true;
         } else {
@@ -25,13 +25,13 @@ public abstract class Task {
 
     public String toString() {
         if (this.completed) {
-            return "[X] " + this.taskname;
+            return "[X] " + this.taskName;
         }
-        return "[ ] " + this.taskname;
+        return "[ ] " + this.taskName;
     }
 
     public String printName() {
-        return this.taskname;
+        return this.taskName;
     }
 
     public boolean printCompletionStatus() {

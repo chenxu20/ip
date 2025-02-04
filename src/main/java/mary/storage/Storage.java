@@ -1,18 +1,18 @@
 package mary.storage;
 
-import mary.exception.MaryException;
-import mary.task.Task;
-import mary.task.TaskList;
-import mary.task.Todo;
-import mary.task.Deadline;
-import mary.task.Event;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import mary.exception.MaryException;
+import mary.task.Deadline;
+import mary.task.Event;
+import mary.task.Task;
+import mary.task.TaskList;
+import mary.task.Todo;
 
 public class Storage {
 
@@ -31,20 +31,22 @@ public class Storage {
                 String indivTask = fileScanner.nextLine();
                 String[] taskStatus = indivTask.split("\\|", 3);
                 switch (taskStatus[0]) {
-                    case "T":
-                        taskList.add(new Todo(taskStatus[2], Integer.parseInt(taskStatus[1])));
-                        break;
-                    case "D":
-                        String[] deadlineTaskDetails = taskStatus[2].split("\\|");
-                        taskList.add(new Deadline(deadlineTaskDetails[0], Integer.parseInt(taskStatus[1]),
-                                LocalDateTime.parse(deadlineTaskDetails[2])));
-                        break;
-                    case "E":
-                        String[] eventTaskDetails = taskStatus[2].split("\\|");
-                        taskList.add(new Event(eventTaskDetails[0], Integer.parseInt(taskStatus[1]),
-                                LocalDateTime.parse(eventTaskDetails[1]),
-                                LocalDateTime.parse(eventTaskDetails[2])));
-                        break;
+                case "T":
+                    taskList.add(new Todo(taskStatus[2], Integer.parseInt(taskStatus[1])));
+                    break;
+                case "D":
+                    String[] deadlineTaskDetails = taskStatus[2].split("\\|");
+                    taskList.add(new Deadline(deadlineTaskDetails[0], Integer.parseInt(taskStatus[1]),
+                            LocalDateTime.parse(deadlineTaskDetails[2])));
+                    break;
+                case "E":
+                    String[] eventTaskDetails = taskStatus[2].split("\\|");
+                    taskList.add(new Event(eventTaskDetails[0], Integer.parseInt(taskStatus[1]),
+                            LocalDateTime.parse(eventTaskDetails[1]),
+                            LocalDateTime.parse(eventTaskDetails[2])));
+                    break;
+                default:
+                    continue;
                 }
             }
             fileScanner.close();

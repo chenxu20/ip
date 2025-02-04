@@ -1,13 +1,12 @@
 package mary.parser;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.junit.jupiter.api.Test;
 
 import mary.exception.MaryException;
 import mary.task.TaskList;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.fail;
 
 public class ParserTest {
 
@@ -24,16 +23,16 @@ public class ParserTest {
     public void parseDeadline_invalidInputs_throwsMaryException() {
         assertThrows(MaryException.class, () -> Parser.parseDeadline("return books /by 2023-01-02", new TaskList()));
         assertThrows(MaryException.class, () -> Parser.parseDeadline("return books", new TaskList()));
-        assertThrows(MaryException.class,
-                () -> Parser.parseDeadline("return books /by 2023-01-02 12:12 20 seconds", new TaskList()));
+        assertThrows(MaryException.class, () ->
+            Parser.parseDeadline("return books /by 2023-01-02 12:12 20 seconds", new TaskList()));
     }
 
     @Test
     public void parseEvent_invalidInputs_throwsMaryException() {
         assertThrows(MaryException.class, () -> Parser.parseEvent("event project meeting", new TaskList()));
-        assertThrows(MaryException.class,
-                () -> Parser.parseEvent("event project meeting /from 2023-01-02 12:00", new TaskList()));
-        assertThrows(MaryException.class,
-                () -> Parser.parseEvent("event project meeting /from 2023-01-02 12:00 /to", new TaskList()));
+        assertThrows(MaryException.class, () ->
+            Parser.parseEvent("event project meeting /from 2023-01-02 12:00", new TaskList()));
+        assertThrows(MaryException.class, () ->
+            Parser.parseEvent("event project meeting /from 2023-01-02 12:00 /to", new TaskList()));
     }
 }
