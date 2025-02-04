@@ -1,12 +1,12 @@
 package mary.chatbot;
 
+import java.util.Scanner;
+
+import mary.exception.MaryException;
+import mary.parser.Parser;
 import mary.storage.Storage;
 import mary.task.TaskList;
 import mary.ui.Ui;
-import mary.exception.MaryException;
-import mary.parser.Parser;
-
-import java.util.Scanner;
 
 /**
  * A chatbot that helps to organise and manage list of tasks that users key in.
@@ -51,57 +51,57 @@ public class Mary {
             this.ui.printLine();
             try {
                 switch (command) {
-                    case "bye":
-                        this.ui.exit();
-                        break;
-                    case "todo":
-                        if (splitInput.length < 2) {
-                            throw new MaryException("Task description is missing!");
-                        }
-                        Parser.parseToDo(splitInput[1], this.tasks);
-                        storage.store(this.tasks);
-                        break;
-                    case "deadline":
-                        if (splitInput.length < 2) {
-                            throw new MaryException("Task description and deadline are missing!");
-                        }
-                        Parser.parseDeadline(splitInput[1], this.tasks);
-                        storage.store(this.tasks);
-                        break;
-                    case "event":
-                        if (splitInput.length < 2) {
-                            throw new MaryException("Task description and event duration are missing!");
-                        }
-                        Parser.parseEvent(splitInput[1], this.tasks);
-                        storage.store(this.tasks);
-                        break;
-                    case "mark":
-                        if (splitInput.length < 2) {
-                            throw new MaryException("Choose task to be marked!");
-                        }
-                        this.tasks.markTask(splitInput[1]);
-                        storage.store(this.tasks);
-                        break;
-                    case "unmark":
-                        if (splitInput.length < 2) {
-                            throw new MaryException("Choose task to be unmarked!");
-                        }
-                        this.tasks.unmarkTask(splitInput[1]);
-                        storage.store(this.tasks);
-                        break;
-                    case "list":
-                        this.tasks.listTasks();
-                        break;
-                    case "delete":
-                        if (splitInput.length < 2) {
-                            throw new MaryException("Choose task to be deleted!");
-                        }
-                        this.tasks.deleteTask(splitInput[1]);
-                        storage.store(this.tasks);
-                        break;
-                    default:
-                        System.out.println(
-                                "Sorry I don't quite understand what you are saying, please use a different command!");
+                case "bye":
+                    this.ui.exit();
+                    break;
+                case "todo":
+                    if (splitInput.length < 2) {
+                        throw new MaryException("Task description is missing!");
+                    }
+                    Parser.parseToDo(splitInput[1], this.tasks);
+                    storage.store(this.tasks);
+                    break;
+                case "deadline":
+                    if (splitInput.length < 2) {
+                        throw new MaryException("Task description and deadline are missing!");
+                    }
+                    Parser.parseDeadline(splitInput[1], this.tasks);
+                    storage.store(this.tasks);
+                    break;
+                case "event":
+                    if (splitInput.length < 2) {
+                        throw new MaryException("Task description and event duration are missing!");
+                    }
+                    Parser.parseEvent(splitInput[1], this.tasks);
+                    storage.store(this.tasks);
+                    break;
+                case "mark":
+                    if (splitInput.length < 2) {
+                        throw new MaryException("Choose task to be marked!");
+                    }
+                    this.tasks.markTask(splitInput[1]);
+                    storage.store(this.tasks);
+                    break;
+                case "unmark":
+                    if (splitInput.length < 2) {
+                        throw new MaryException("Choose task to be unmarked!");
+                    }
+                    this.tasks.unmarkTask(splitInput[1]);
+                    storage.store(this.tasks);
+                    break;
+                case "list":
+                    this.tasks.listTasks();
+                    break;
+                case "delete":
+                    if (splitInput.length < 2) {
+                        throw new MaryException("Choose task to be deleted!");
+                    }
+                    this.tasks.deleteTask(splitInput[1]);
+                    storage.store(this.tasks);
+                    break;
+                default:
+                    System.out.println(
+                            "Sorry I don't quite understand what you are saying, please use a different command!");
                 }
 
                 this.ui.printNewline();

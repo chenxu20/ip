@@ -6,7 +6,7 @@ package mary.task;
  */
 public abstract class Task {
     private boolean completed;
-    private String taskname;
+    private String taskName;
 
     /**
      * Records the completion status and task description.
@@ -14,8 +14,8 @@ public abstract class Task {
      * @param taskname  Description of task.
      * @param completed The completion status (0 for incomplete, 1 for completed).
      */
-    public Task(String taskname, int completed) {
-        this.taskname = taskname;
+    public Task(String taskName, int completed) {
+        this.taskName = taskName;
         if (completed == 1) {
             this.completed = true;
         } else {
@@ -41,9 +41,9 @@ public abstract class Task {
 
     public String toString() {
         if (this.completed) {
-            return "[X] " + this.taskname;
+            return "[X] " + this.taskName;
         }
-        return "[ ] " + this.taskname;
+        return "[ ] " + this.taskName;
     }
 
     /**
@@ -51,7 +51,7 @@ public abstract class Task {
      * @return Description of task.
      */
     public String printName() {
-        return this.taskname;
+        return this.taskName;
     }
 
     /**
