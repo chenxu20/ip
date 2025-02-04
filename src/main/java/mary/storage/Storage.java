@@ -54,7 +54,7 @@ public class Storage {
                 case "D":
                     String[] deadlineTaskDetails = taskStatus[2].split("\\|");
                     taskList.add(new Deadline(deadlineTaskDetails[0], Integer.parseInt(taskStatus[1]),
-                            LocalDateTime.parse(deadlineTaskDetails[2])));
+                            LocalDateTime.parse(deadlineTaskDetails[1])));
                     break;
                 case "E":
                     String[] eventTaskDetails = taskStatus[2].split("\\|");

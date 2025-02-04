@@ -126,4 +126,18 @@ public class TaskList {
         System.out.println("Noted. I've removed this task:");
         this.printNumberofTasks();
     }
+
+    /**
+     * Finds tasks whose description contains the exact input from user.
+     * @param input Keywords used by user to filter for tasks.
+     */
+    public void findTask(String input) {
+        int count = 1;
+        System.out.println("Here are the matching tasks in your list:");
+        for (Task task : taskList) {
+            if (task.printName().contains(input)) {
+                System.out.println((count++) + ". " + task.toString());
+            }
+        }
+    }
 }

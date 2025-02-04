@@ -99,6 +99,12 @@ public class Mary {
                     this.tasks.deleteTask(splitInput[1]);
                     storage.store(this.tasks);
                     break;
+                case "find":
+                    if (splitInput.length < 2) {
+                        throw new MaryException("Key in what you want to find!");
+                    }
+                    this.tasks.findTask(splitInput[1]);
+                    break;
                 default:
                     System.out.println(
                             "Sorry I don't quite understand what you are saying, please use a different command!");
