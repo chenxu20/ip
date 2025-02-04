@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class TaskList {
 
-    private ArrayList<Task> taskList;
+    private ArrayList<Task> taskList = new ArrayList<>();
 
     public TaskList(ArrayList<Task> taskList) {
         this.taskList = taskList;
@@ -17,16 +17,13 @@ public class TaskList {
         return this.taskList;
     }
 
-    public void printAddStatus() {
-        System.out.println("Got it. I've added this task:");
-    }
-
     public void printNumberofTasks() {
         System.out.println("Now you have " + this.taskList.size() + " tasks in the list.");
     }
 
     public void printTask() {
-        this.printAddStatus();
+        System.out.println("");
+        System.out.println("Got it. I've added this task:");
         System.out.println(taskList.get(taskList.size() - 1).toString());
         this.printNumberofTasks();
     }
@@ -39,24 +36,12 @@ public class TaskList {
         }
     }
 
-    public void markTask(String input) {
-        try {
-            taskList.get(Integer.parseInt(input) - 1).mark();
-        } catch (IndexOutOfBoundsException e) {
-            System.out.println("There are no tasks at this position!");
-        } catch (NumberFormatException e) {
-            System.out.println("Enter a valid numerical index!");
-        }
+    public void markTask(String input) throws IndexOutOfBoundsException, NumberFormatException {
+        taskList.get(Integer.parseInt(input) - 1).mark();
     }
 
-    public void unmarkTask(String input) {
-        try {
-            taskList.get(Integer.parseInt(input) - 1).unmark();
-        } catch (IndexOutOfBoundsException e) {
-            System.out.println("There are no tasks at this position!");
-        } catch (NumberFormatException e) {
-            System.out.println("Enter a valid numerical index!");
-        }
+    public void unmarkTask(String input) throws IndexOutOfBoundsException, NumberFormatException {
+        taskList.get(Integer.parseInt(input) - 1).unmark();
     }
 
     public void addToDoTask(Task task) {
@@ -74,17 +59,11 @@ public class TaskList {
         this.printTask();
     }
 
-    public void deleteTask(String input) {
-        try {
-            int index = Integer.parseInt(input);
-            System.out.println(taskList.get(index - 1).toString());
-            this.taskList.remove(index - 1);
-            System.out.println("Noted. I've removed this task:");
-            this.printNumberofTasks();
-        } catch (IndexOutOfBoundsException e) {
-            System.out.println("There are no tasks at this position!");
-        } catch (NumberFormatException e) {
-            System.out.println("Enter a valid numerical index!");
-        }
+    public void deleteTask(String input) throws IndexOutOfBoundsException, NumberFormatException {
+        int index = Integer.parseInt(input);
+        System.out.println(taskList.get(index - 1).toString());
+        this.taskList.remove(index - 1);
+        System.out.println("Noted. I've removed this task:");
+        this.printNumberofTasks();
     }
 }
