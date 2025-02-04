@@ -31,8 +31,8 @@ public class Mary {
 
         while (true) {
             String input = inputScanner.nextLine();
-            String[] splitInput = Parser.parseInput(input);
-            String command = splitInput[0].toLowerCase();
+            String command = Parser.parseInput(input);
+            String[] splitInput = input.split(" ", 2);
             this.ui.printLine();
             try {
                 switch (command) {
@@ -96,6 +96,10 @@ public class Mary {
                 }
             } catch (MaryException e) {
                 System.out.println(e.getMessage());
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println("There are no tasks at this position!");
+            } catch (NumberFormatException e) {
+                System.out.println("Enter a valid numerical index!");
             }
         }
         inputScanner.close();

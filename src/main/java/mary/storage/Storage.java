@@ -29,19 +29,21 @@ public class Storage {
             Scanner fileScanner = new Scanner(taskFile);
             while (fileScanner.hasNextLine()) {
                 String indivTask = fileScanner.nextLine();
-                String[] taskStatus = indivTask.split("\\|");
+                String[] taskStatus = indivTask.split("\\|", 3);
                 switch (taskStatus[0]) {
                     case "T":
                         taskList.add(new Todo(taskStatus[2], Integer.parseInt(taskStatus[1])));
                         break;
                     case "D":
-                        taskList.add(new Deadline(taskStatus[2], Integer.parseInt(taskStatus[1]),
-                                LocalDateTime.parse(taskStatus[3])));
+                        String[] deadlineTaskDetails = taskStatus[2].split("\\|");
+                        taskList.add(new Deadline(deadlineTaskDetails[0], Integer.parseInt(taskStatus[1]),
+                                LocalDateTime.parse(deadlineTaskDetails[2])));
                         break;
                     case "E":
-                        taskList.add(new Event(taskStatus[2], Integer.parseInt(taskStatus[1]),
-                                LocalDateTime.parse(taskStatus[3]),
-                                LocalDateTime.parse(taskStatus[4])));
+                        String[] eventTaskDetails = taskStatus[2].split("\\|");
+                        taskList.add(new Event(eventTaskDetails[0], Integer.parseInt(taskStatus[1]),
+                                LocalDateTime.parse(eventTaskDetails[1]),
+                                LocalDateTime.parse(eventTaskDetails[2])));
                         break;
                 }
             }
