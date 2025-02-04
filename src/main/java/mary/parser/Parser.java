@@ -18,7 +18,7 @@ public class Parser {
     /**
      * Takes in raw input from the user to return the first word which is the
      * command.
-     * 
+     *
      * @param input Raw input from the user.
      * @return A word to check if it is in the valid list of commands.
      */
@@ -28,7 +28,7 @@ public class Parser {
 
     /**
      * Helps to add a ToDo task to the list of tasks.
-     * 
+     *
      * @param input    Task description.
      * @param taskList An instance of the TaskList containing the list of tasks.
      */
@@ -38,7 +38,7 @@ public class Parser {
 
     /**
      * Helps to add a Deadline task to the list of tasks.
-     * 
+     *
      * @param input    String containing task description and the deadline of the
      *                 task.
      * @param taskList An instance of the TaskList containing the list of tasks.
@@ -73,7 +73,7 @@ public class Parser {
 
     /**
      * Helps to add an Event task to the list of tasks.
-     * 
+     *
      * @param input    String containing task description, the starting date of the
      *                 task and the ending date of the task.
      * @param taskList An instance of the TaskList containing the list of tasks.

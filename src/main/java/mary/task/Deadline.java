@@ -12,7 +12,7 @@ public class Deadline extends Task {
     /**
      * Creates a new Deadline task with a specified description, completion status,
      * and due date.
-     * 
+     *
      * @param des       Description of task.
      * @param completed The completion status (0 for incomplete, 1 for completed).
      * @param deadline  Due date and time of task.

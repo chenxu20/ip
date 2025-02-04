@@ -10,7 +10,7 @@ public abstract class Task {
 
     /**
      * Records the completion status and task description.
-     * 
+     *
      * @param taskname  Description of task.
      * @param completed The completion status (0 for incomplete, 1 for completed).
      */
@@ -47,7 +47,7 @@ public abstract class Task {
     }
 
     /**
-     * 
+     * Returns name of task
      * @return Description of task.
      */
     public String printName() {
@@ -55,7 +55,7 @@ public abstract class Task {
     }
 
     /**
-     * 
+     * returns completeion status of task
      * @return Completion status of task.
      */
     public boolean printCompletionStatus() {

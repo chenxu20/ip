@@ -21,7 +21,7 @@ public class Mary {
 
     /**
      * Initialises TaskList by based on the input filepath.
-     * 
+     *
      * @param filePath filepath to where the file containing list of tasks is
      *                 located.
      */

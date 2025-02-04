@@ -11,7 +11,7 @@ public class TaskList {
     private ArrayList<Task> taskList = new ArrayList<>();
 
     /**
-     * 
+     * Initialises list of tasks
      * @param taskList List of tasks read from file stored on the computer.
      */
     public TaskList(ArrayList<Task> taskList) {
@@ -22,7 +22,7 @@ public class TaskList {
     }
 
     /**
-     * 
+     * Returns list of tasks
      * @return List of tasks.
      */
     public ArrayList<Task> getTaskList() {
@@ -59,7 +59,7 @@ public class TaskList {
 
     /**
      * Facilitates the marking of task as completed.
-     * 
+     *
      * @param input Index of the task to be marked.
      * @throws IndexOutOfBoundsException When the input index is greater than the
      *                                   size of the list.
@@ -71,7 +71,7 @@ public class TaskList {
 
     /**
      * Facilitates the marking of task as incomplete.
-     * 
+     *
      * @param input Index of the task to be unmarked.
      * @throws IndexOutOfBoundsException When the input index is greater than the
      *                                   size of the list.
@@ -83,7 +83,7 @@ public class TaskList {
 
     /**
      * Facilitates the adding of Todo task to the list of tasks.
-     * 
+     *
      * @param task To be added to the list.
      */
     public void addToDoTask(Task task) {
@@ -93,7 +93,7 @@ public class TaskList {
 
     /**
      * Facilitates the adding of Deadline task to the list of tasks.
-     * 
+     *
      * @param task To be added to the list.
      */
     public void addDeadlineTask(Task task) {
@@ -103,7 +103,7 @@ public class TaskList {
 
     /**
      * Facilitates the adding of Event task to the list of tasks.
-     * 
+     *
      * @param task To be added to the list.
      */
     public void addEventTask(Task task) {
@@ -113,7 +113,7 @@ public class TaskList {
 
     /**
      * Facilitates the deletion of task.
-     * 
+     *
      * @param input Index of the task to be deleted.
      * @throws IndexOutOfBoundsException When the input index is greater than the
      *                                   size of the list.

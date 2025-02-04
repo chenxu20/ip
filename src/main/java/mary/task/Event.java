@@ -13,7 +13,7 @@ public class Event extends Task {
     /**
      * Creates a new Event task with a specified description, completion status,
      * starting time and ending time.
-     * 
+     *
      * @param des       Description of task.
      * @param completed The completion status (0 for incomplete, 1 for completed).
      * @param start     Starting date and time of the task.

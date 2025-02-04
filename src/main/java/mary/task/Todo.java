@@ -7,7 +7,7 @@ public class Todo extends Task {
 
     /**
      * Creates a new Event task with a specified description and completion status.
-     * 
+     *
      * @param input     Description of task.
      * @param completed The completion status (0 for incomplete, 1 for completed).
      */
