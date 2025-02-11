@@ -32,8 +32,8 @@ public class Parser {
      * @param input    Task description.
      * @param taskList An instance of the TaskList containing the list of tasks.
      */
-    public static void parseToDo(String input, TaskList taskList) {
-        taskList.addToDoTask(new Todo(input, 0));
+    public static String parseToDo(String input, TaskList taskList) {
+        return taskList.addToDoTask(new Todo(input, 0));
     }
 
     /**
@@ -45,7 +45,8 @@ public class Parser {
      * @throws MaryException If format of string is incorrect due to missing task
      *                       description or invalid date and time format.
      */
-    public static void parseDeadline(String input, TaskList taskList) throws MaryException {
+    public static String parseDeadline(String input, TaskList taskList) throws MaryException {
+        String response = "";
         try {
             String[] extractTaskDetails = input.split("/");
             if (extractTaskDetails.length < 2) {
@@ -64,11 +65,13 @@ public class Parser {
             String deadlineTime = deadlineDateTime[2];
             LocalDateTime deadline = LocalDateTime.parse(deadlineDate + "T" + deadlineTime + ":00");
 
-            taskList.addDeadlineTask(new Deadline(extractTaskDetails[0].trim(), 0, deadline));
+            response = taskList.addDeadlineTask(new Deadline(extractTaskDetails[0].trim(), 0, deadline));
         } catch (DateTimeException e) {
             System.out.println("Format of deadline is wrong!");
             System.out.println("Format of task deadline: " + "\"deadline <task description> /by YYYY-MM-DD HH:MM\"");
         }
+
+        return response;
     }
 
     /**
@@ -80,7 +83,8 @@ public class Parser {
      * @throws MaryException If format of string is incorrect due to missing task
      *                       description or invalid date and time format.
      */
-    public static void parseEvent(String input, TaskList taskList) throws MaryException {
+    public static String parseEvent(String input, TaskList taskList) throws MaryException {
+        String response = "";
         try {
             String[] extractTaskDetails = input.split("/");
 
@@ -120,7 +124,7 @@ public class Parser {
                 throw new MaryException("End date cannot be before start date!");
             }
 
-            taskList.addEventTask(new Event(extractTaskDetails[0].trim(), 0, start, end));
+            response = taskList.addEventTask(new Event(extractTaskDetails[0].trim(), 0, start, end));
         } catch (DateTimeException e) {
             System.out.println("Format of start or end date is wrong!");
             System.out.println(
@@ -129,5 +133,6 @@ public class Parser {
                             + "You can omit the end date if it is the same as the starting date, "
                             + "but you cannot omit the end time!");
         }
+        return response;
     }
 }

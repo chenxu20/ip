@@ -29,18 +29,16 @@ public class Event extends Task {
      * Marks a task as completed.
      */
     @Override
-    public void mark() {
-        super.mark();
-        System.out.println(this.toString());
+    public String mark() {
+        return super.mark() + this.toString();
     }
 
     /**
      * Marks a task as incomplete.
      */
     @Override
-    public void unmark() {
-        super.unmark();
-        System.out.println(this.toString());
+    public String unmark() {
+        return super.unmark() + this.toString();
     }
 
     @Override

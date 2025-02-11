@@ -12,6 +12,7 @@ public class TaskList {
 
     /**
      * Initialises list of tasks
+     *
      * @param taskList List of tasks read from file stored on the computer.
      */
     public TaskList(ArrayList<Task> taskList) {
@@ -23,6 +24,7 @@ public class TaskList {
 
     /**
      * Returns list of tasks
+     *
      * @return List of tasks.
      */
     public ArrayList<Task> getTaskList() {
@@ -32,29 +34,29 @@ public class TaskList {
     /**
      * Informs user on the number of tasks in the list of tasks.
      */
-    public void printNumberofTasks() {
-        System.out.println("Now you have " + this.taskList.size() + " tasks in the list.");
+    public String printNumberofTasks() {
+        return "Now you have " + this.taskList.size() + " tasks in the list.";
     }
 
     /**
      * Informs user that task has been added successfully.
      */
-    public void printTask() {
-        System.out.println("");
-        System.out.println("Got it. I've added this task:");
-        System.out.println(taskList.get(taskList.size() - 1).toString());
-        this.printNumberofTasks();
+    public String printTask() {
+        return "\n" + "Got it. I've added this task:\n" + taskList.get(taskList.size() - 1).toString()
+                + "\n" + this.printNumberofTasks();
     }
 
     /**
      * Lists out the details of the tasks in the list.
      */
-    public void listTasks() {
+    public String listTasks() {
+        String response = "";
         int count = 1;
-        System.out.println("Here are the tasks in your list:");
+        response += "Here are the tasks in your list:\n";
         for (Task task : taskList) {
-            System.out.println((count++) + ". " + task.toString());
+            response += (count++) + ". " + task.toString() + "\n";
         }
+        return response;
     }
 
     /**
@@ -65,8 +67,8 @@ public class TaskList {
      *                                   size of the list.
      * @throws NumberFormatException     When the input is not an integer.
      */
-    public void markTask(String input) throws IndexOutOfBoundsException, NumberFormatException {
-        taskList.get(Integer.parseInt(input) - 1).mark();
+    public String markTask(String input) throws IndexOutOfBoundsException, NumberFormatException {
+        return taskList.get(Integer.parseInt(input) - 1).mark();
     }
 
     /**
@@ -77,8 +79,8 @@ public class TaskList {
      *                                   size of the list.
      * @throws NumberFormatException     When the input is not an integer.
      */
-    public void unmarkTask(String input) throws IndexOutOfBoundsException, NumberFormatException {
-        taskList.get(Integer.parseInt(input) - 1).unmark();
+    public String unmarkTask(String input) throws IndexOutOfBoundsException, NumberFormatException {
+        return taskList.get(Integer.parseInt(input) - 1).unmark();
     }
 
     /**
@@ -86,9 +88,9 @@ public class TaskList {
      *
      * @param task To be added to the list.
      */
-    public void addToDoTask(Task task) {
+    public String addToDoTask(Task task) {
         this.taskList.add(task);
-        this.printTask();
+        return this.printTask();
     }
 
     /**
@@ -96,9 +98,9 @@ public class TaskList {
      *
      * @param task To be added to the list.
      */
-    public void addDeadlineTask(Task task) {
+    public String addDeadlineTask(Task task) {
         this.taskList.add(task);
-        this.printTask();
+        return this.printTask();
     }
 
     /**
@@ -106,9 +108,9 @@ public class TaskList {
      *
      * @param task To be added to the list.
      */
-    public void addEventTask(Task task) {
+    public String addEventTask(Task task) {
         this.taskList.add(task);
-        this.printTask();
+        return this.printTask();
     }
 
     /**
@@ -119,25 +121,30 @@ public class TaskList {
      *                                   size of the list.
      * @throws NumberFormatException     When the input is not an integer.
      */
-    public void deleteTask(String input) throws IndexOutOfBoundsException, NumberFormatException {
+    public String deleteTask(String input) throws IndexOutOfBoundsException, NumberFormatException {
+        String response = "";
         int index = Integer.parseInt(input);
-        System.out.println(taskList.get(index - 1).toString());
+        response += taskList.get(index - 1).toString();
         this.taskList.remove(index - 1);
-        System.out.println("Noted. I've removed this task:");
-        this.printNumberofTasks();
+        response += "\nNoted. I've removed this task:\n";
+        response += this.printNumberofTasks();
+        return response;
     }
 
     /**
      * Finds tasks whose description contains the exact input from user.
+     *
      * @param input Keywords used by user to filter for tasks.
      */
-    public void findTask(String input) {
+    public String findTask(String input) {
+        String response = "";
         int count = 1;
-        System.out.println("Here are the matching tasks in your list:");
+        response += "Here are the matching tasks in your list:\n";
         for (Task task : taskList) {
             if (task.printName().contains(input)) {
-                System.out.println((count++) + ". " + task.toString());
+                response += (count++) + ". " + task.toString() + "\n";
             }
         }
+        return response;
     }
 }
