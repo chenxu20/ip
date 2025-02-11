@@ -26,17 +26,17 @@ public abstract class Task {
     /**
      * Marks a task as completed.
      */
-    public void mark() {
+    public String mark() {
         this.completed = true;
-        System.out.println("Nice! I've marked this task as done:");
+        return "Nice! I've marked this task as done:\n";
     }
 
     /**
      * Marks a task as incomplete.
      */
-    public void unmark() {
+    public String unmark() {
         this.completed = false;
-        System.out.println("OK, I've marked this task as not done yet:");
+        return "OK, I've marked this task as not done yet:\n";
     }
 
     @Override
@@ -49,6 +49,7 @@ public abstract class Task {
 
     /**
      * Returns name of task
+     *
      * @return Description of task.
      */
     public String printName() {
@@ -57,6 +58,7 @@ public abstract class Task {
 
     /**
      * returns completeion status of task
+     *
      * @return Completion status of task.
      */
     public boolean printCompletionStatus() {
