@@ -70,7 +70,7 @@ public class Parser {
             System.out.println("Format of deadline is wrong!");
             System.out.println("Format of task deadline: " + "\"deadline <task description> /by YYYY-MM-DD HH:MM\"");
         }
-
+        assert response != null;
         return response;
     }
 
@@ -133,6 +133,7 @@ public class Parser {
                             + "You can omit the end date if it is the same as the starting date, "
                             + "but you cannot omit the end time!");
         }
+        assert response != null;
         return response;
     }
 }
