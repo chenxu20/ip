@@ -27,6 +27,7 @@ public class Mary {
         assert filePath != null : "Chatbot needs to be initialised with a file path";
         this.ui = new Ui();
         this.storage = new Storage(filePath);
+
         try {
             this.tasks = new TaskList(storage.load());
         } catch (MaryException e) {
@@ -40,6 +41,7 @@ public class Mary {
         String response = "";
         String command = Parser.parseInput(input);
         String[] splitInput = input.split(" ", 2);
+
         try {
             switch (command) {
             case "bye":
@@ -107,11 +109,8 @@ public class Mary {
         } catch (NumberFormatException e) {
             System.out.println("Enter a valid numerical index!");
         }
+        
         assert response != null;
         return response;
     }
-
-    // public static void main(String[] args) {
-    // new Mary("./Task.txt").run();
-    // }
 }

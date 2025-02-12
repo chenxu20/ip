@@ -5,7 +5,7 @@ package mary.task;
  * description.
  */
 public abstract class Task {
-    private boolean completed;
+    private boolean isCompleted;
     private String taskName;
 
     /**
@@ -17,9 +17,9 @@ public abstract class Task {
     public Task(String taskName, int completed) {
         this.taskName = taskName;
         if (completed == 1) {
-            this.completed = true;
+            this.isCompleted = true;
         } else {
-            this.completed = false;
+            this.isCompleted = false;
         }
     }
 
@@ -27,7 +27,7 @@ public abstract class Task {
      * Marks a task as completed.
      */
     public String mark() {
-        this.completed = true;
+        this.isCompleted = true;
         return "Nice! I've marked this task as done:\n";
     }
 
@@ -35,13 +35,13 @@ public abstract class Task {
      * Marks a task as incomplete.
      */
     public String unmark() {
-        this.completed = false;
+        this.isCompleted = false;
         return "OK, I've marked this task as not done yet:\n";
     }
 
     @Override
     public String toString() {
-        if (this.completed) {
+        if (this.isCompleted) {
             return "[X] " + this.taskName;
         }
         return "[ ] " + this.taskName;
@@ -62,7 +62,7 @@ public abstract class Task {
      * @return Completion status of task.
      */
     public boolean printCompletionStatus() {
-        return this.completed;
+        return this.isCompleted;
     }
 
     /**

@@ -50,9 +50,9 @@ public class TaskList {
      * Lists out the details of the tasks in the list.
      */
     public String listTasks() {
-        String response = "";
+        String response = "Here are the tasks in your list:\n";
         int count = 1;
-        response += "Here are the tasks in your list:\n";
+
         for (Task task : taskList) {
             response += (count++) + ". " + task.toString() + "\n";
         }
@@ -125,10 +125,10 @@ public class TaskList {
      * @throws NumberFormatException     When the input is not an integer.
      */
     public String deleteTask(String input) throws IndexOutOfBoundsException, NumberFormatException {
-        String response = "";
         int index = Integer.parseInt(input);
-        response += taskList.get(index - 1).toString();
+        String response = taskList.get(index - 1).toString();
         this.taskList.remove(index - 1);
+
         response += "\nNoted. I've removed this task:\n";
         response += this.printNumberofTasks();
         return response;
@@ -140,9 +140,9 @@ public class TaskList {
      * @param input Keywords used by user to filter for tasks.
      */
     public String findTask(String input) {
-        String response = "";
+        String response = "Here are the matching tasks in your list:\n";
         int count = 1;
-        response += "Here are the matching tasks in your list:\n";
+
         for (Task task : taskList) {
             if (task.printName().contains(input)) {
                 response += (count++) + ". " + task.toString() + "\n";
