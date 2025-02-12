@@ -8,6 +8,7 @@ import mary.task.Deadline;
 import mary.task.Event;
 import mary.task.TaskList;
 import mary.task.Todo;
+import mary.util.Constants;
 
 /**
  * Parses input from users to ensure that the right commands are given to the
@@ -33,7 +34,7 @@ public class Parser {
      * @param taskList An instance of the TaskList containing the list of tasks.
      */
     public static String parseToDo(String input, TaskList taskList) {
-        return taskList.addToDoTask(new Todo(input, 0));
+        return taskList.addToDoTask(new Todo(input, Constants.INCOMPLETE));
     }
 
     /**
@@ -56,16 +57,9 @@ public class Parser {
             }
 
             String[] deadlineDateTime = extractTaskDetails[1].split(" ");
-            if (deadlineDateTime.length != 3) {
-                throw new MaryException(
-                        "Wrong format! Format of task deadline: "
-                                + "\\\"deadline <task description> /by YYYY-MM-DD HH:MM\\\"");
-            }
-            String deadlineDate = deadlineDateTime[1];
-            String deadlineTime = deadlineDateTime[2];
-            LocalDateTime deadline = LocalDateTime.parse(deadlineDate + "T" + deadlineTime + ":00");
-
-            response = taskList.addDeadlineTask(new Deadline(extractTaskDetails[0].trim(), 0, deadline));
+            LocalDateTime deadline = parseDeadlineDateTime(deadlineDateTime);
+            response = taskList.addDeadlineTask(new Deadline(extractTaskDetails[0].trim(),
+                Constants.INCOMPLETE, deadline));
         } catch (DateTimeException e) {
             System.out.println("Format of deadline is wrong!");
             System.out.println("Format of task deadline: " + "\"deadline <task description> /by YYYY-MM-DD HH:MM\"");
@@ -95,36 +89,17 @@ public class Parser {
             }
 
             String[] startDateTime = extractTaskDetails[1].split(" ");
-            if (startDateTime.length != 3) {
-                throw new MaryException(
-                        "Missing starting date! Format of event duration: "
-                                + "\\\"event <event description> /from YYYY-MM-DD HH:MM /to YYYY-MM-DD HH:MM\\\".");
-            }
-            String startDate = startDateTime[1];
-            String startTime = startDateTime[2];
-            LocalDateTime start = LocalDateTime.parse(startDate + "T" + startTime + ":00");
-
             String[] endDateTime = extractTaskDetails[2].split(" ");
-            String endDate;
-            String endTime;
-            if (endDateTime.length == 2) {
-                endDate = startDate;
-                endTime = endDateTime[1];
-            } else if (endDateTime.length == 3) {
-                endDate = endDateTime[1];
-                endTime = endDateTime[2];
-            } else {
-                throw new MaryException(
-                        "Missing ending date! Format of event duration: "
-                                + "\\\"event <event description> /from YYYY-MM-DD HH:MM /to YYYY-MM-DD HH:MM\\\".");
-            }
-            LocalDateTime end = LocalDateTime.parse(endDate + "T" + endTime + ":00");
+            LocalDateTime[] startAndEndTime = parseEventDateTime(startDateTime, endDateTime);
+
+            LocalDateTime start = startAndEndTime[0];
+            LocalDateTime end = startAndEndTime[1];
 
             if (end.isBefore(start)) {
                 throw new MaryException("End date cannot be before start date!");
             }
 
-            response = taskList.addEventTask(new Event(extractTaskDetails[0].trim(), 0, start, end));
+            response = taskList.addEventTask(new Event(extractTaskDetails[0].trim(), Constants.INCOMPLETE, start, end));
         } catch (DateTimeException e) {
             System.out.println("Format of start or end date is wrong!");
             System.out.println(
@@ -135,5 +110,61 @@ public class Parser {
         }
         assert response != null;
         return response;
+    }
+
+    /**
+     * Parses the Date and Time for Deadline Tasks
+     * @param deadlineDateTime The String array containing the details of the deadline
+     * @return LocalDateTime for Deadline Tasks
+     * @throws MaryException If the format is incorrect
+     */
+    private static LocalDateTime parseDeadlineDateTime(String[] deadlineDateTime) throws MaryException {
+        if (deadlineDateTime.length != 3) {
+            throw new MaryException(
+                    "Wrong format! Format of task deadline: "
+                            + "\\\"deadline <task description> /by YYYY-MM-DD HH:MM\\\"");
+        }
+
+        String deadlineDate = deadlineDateTime[1];
+        String deadlineTime = deadlineDateTime[2];
+        return LocalDateTime.parse(deadlineDate + "T" + deadlineTime + ":00");
+    }
+
+    /**
+     * Parses the Date and Time for the Event Tasks
+     * @param eventStartTime The String array containing details of the start time
+     * @param eventEndTime The String array containing details of the end time
+     * @return Array for LocalDateTime containing start and end time of the event
+     * @throws MaryException If the format is incorrect
+     */
+    private static LocalDateTime[] parseEventDateTime(String[] eventStartTime, String[] eventEndTime) throws MaryException {
+        LocalDateTime[] startAndEndTime = new LocalDateTime[2];
+
+        if (eventStartTime.length != 3) {
+            throw new MaryException(
+                    "Missing starting date! Format of event duration: "
+                            + "\\\"event <event description> /from YYYY-MM-DD HH:MM /to YYYY-MM-DD HH:MM\\\".");
+        }
+
+        String startDate = eventStartTime[1];
+        String startTime = eventStartTime[2];
+        startAndEndTime[0] = LocalDateTime.parse(startDate + "T" + startTime + ":00");
+        
+        String endDate;
+        String endTime;
+        if (eventEndTime.length == 2) {
+            endDate = startDate;
+            endTime = eventEndTime[1];
+        } else if (eventEndTime.length == 3) {
+            endDate = eventEndTime[1];
+            endTime = eventEndTime[2];
+        } else {
+            throw new MaryException(
+                    "Missing ending date! Format of event duration: "
+                            + "\\\"event <event description> /from YYYY-MM-DD HH:MM /to YYYY-MM-DD HH:MM\\\".");
+        }
+        startAndEndTime[1] = LocalDateTime.parse(endDate + "T" + endTime + ":00");
+
+        return startAndEndTime;
     }
 }
