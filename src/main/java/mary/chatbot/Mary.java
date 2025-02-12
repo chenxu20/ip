@@ -24,12 +24,13 @@ public class Mary {
      *                 located.
      */
     public Mary(String filePath) {
+        assert filePath != null : "Chatbot needs to be initialised with a file path";
         this.ui = new Ui();
         this.storage = new Storage(filePath);
         try {
             this.tasks = new TaskList(storage.load());
         } catch (MaryException e) {
-            this.ui.showLoadingError();
+            System.out.println(this.ui.showLoadingError());
             this.tasks = new TaskList();
         }
     }
@@ -106,6 +107,7 @@ public class Mary {
         } catch (NumberFormatException e) {
             System.out.println("Enter a valid numerical index!");
         }
+        assert response != null;
         return response;
     }
 
