@@ -90,6 +90,7 @@ public class TaskList {
      */
     public String addToDoTask(Task task) {
         this.taskList.add(task);
+        assert taskList.size() > 0;
         return this.printTask();
     }
 
@@ -100,6 +101,7 @@ public class TaskList {
      */
     public String addDeadlineTask(Task task) {
         this.taskList.add(task);
+        assert taskList.size() > 0;
         return this.printTask();
     }
 
@@ -110,6 +112,7 @@ public class TaskList {
      */
     public String addEventTask(Task task) {
         this.taskList.add(task);
+        assert taskList.size() > 0;
         return this.printTask();
     }
 

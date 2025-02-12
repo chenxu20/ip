@@ -57,7 +57,7 @@ public abstract class Task {
     }
 
     /**
-     * returns completeion status of task
+     * returns completion status of task
      *
      * @return Completion status of task.
      */

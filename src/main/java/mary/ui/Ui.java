@@ -5,8 +5,8 @@ package mary.ui;
  */
 public class Ui {
 
-    public void showLoadingError() {
-        System.out.println("There is some issue, please restart the program");
+    public String showLoadingError() {
+        return "There is some issue, please restart the program";
     }
 
     public String exit() {

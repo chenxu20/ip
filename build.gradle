@@ -50,11 +50,16 @@ application {
 shadowJar {
     archiveBaseName = "mary"
     archiveClassifier = null
+    archiveFileName = "mary.jar"
 }
 
 run{
     standardInput = System.in
     enableAssertions = true
+}
+
+tasks.withType(JavaExec).configureEach {
+    jvmArgs '-ea'
 }
 
 // sourceSets {
