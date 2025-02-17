@@ -1,6 +1,11 @@
 package mary.task;
 
+import java.time.DateTimeException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
+
+import mary.exception.MaryException;
 
 /**
  * An instance which contains the list of tasks that can be modified by users
@@ -149,5 +154,167 @@ public class TaskList {
             }
         }
         return response;
+    }
+
+    public String updateTask(String index, String[] updatedDetails)
+        throws IndexOutOfBoundsException, NumberFormatException, MaryException {
+        int taskIndex = Integer.parseInt(index);
+        Task taskToBeUpdated = this.taskList.get(taskIndex - 1);
+        String taskType = taskToBeUpdated.taskType();
+        String[] filteredUpdatedDetails = Arrays.copyOfRange(updatedDetails, 1, updatedDetails.length);
+
+        ArrayList<String> updatedTaskDetailHeader = new ArrayList<>();
+        ArrayList<String> updatedTaskDetailContent = new ArrayList<>();
+
+        splitUpdateArguments(updatedTaskDetailHeader, updatedTaskDetailContent, filteredUpdatedDetails);
+        checkUpdateValidity(taskType, updatedTaskDetailHeader);
+
+        switch (taskType) {
+        case "T":
+            updateTodoTask(taskToBeUpdated, updatedTaskDetailHeader, updatedTaskDetailContent);
+            break;
+        case "D":
+            updateDeadlineTask(taskToBeUpdated, updatedTaskDetailHeader, updatedTaskDetailContent);
+            break;
+        case "E":
+            updateEventTask(taskToBeUpdated, updatedTaskDetailHeader, updatedTaskDetailContent);
+            break;
+        default:
+        }
+
+        return "Successfully updated task!\n" + "Updated Task: " + taskToBeUpdated.toString(); 
+    }
+
+    private void updateTodoTask(Task task, ArrayList<String> detailHeader, ArrayList<String> detailContent) {
+        task.updateDescription(detailContent.get(0));
+    }
+
+    private void updateDeadlineTask(Task task, ArrayList<String> detailHeader, ArrayList<String> detailContent) throws MaryException {
+        try {
+            String[] newDeadline;
+            LocalDateTime formattedNewDeadline;
+            for (int i = 0; i < detailHeader.size(); i++) {
+                switch(detailHeader.get(i)) {
+                case "by":
+                    newDeadline = detailContent.get(i).split(" ");
+                    formattedNewDeadline = LocalDateTime.parse(newDeadline[0] + "T" + newDeadline[1] + ":00");
+                    break;
+                default:
+                }
+            }
+
+            for (int i = 0; i < detailHeader.size(); i++) {
+                switch(detailHeader.get(i)) {
+                case "description":
+                    task.updateDescription(detailContent.get(i));
+                    break;
+                case "by":
+                    newDeadline = detailContent.get(i).split(" ");
+                    formattedNewDeadline = LocalDateTime.parse(newDeadline[0] + "T" + newDeadline[1] + ":00");
+                    task.updateDeadline(formattedNewDeadline);
+                    break;
+                default:
+                }
+            }
+        } catch (DateTimeException e) {
+            throw new MaryException("Ensure your format for the dates are correct! Correct format: YYYY-MM-DD HH:MM");
+        } catch (IndexOutOfBoundsException e) {
+            throw new MaryException("Ensure your format for the dates are correct! Correct format: YYYY-MM-DD HH:MM");
+        }
+    }
+
+    private void updateEventTask(Task task, ArrayList<String> detailHeader, ArrayList<String> detailContent) throws MaryException {
+        try {
+            String[] newStartTime;
+            LocalDateTime formattedNewStartTime = task.getStartTime();
+
+            String[] newEndTime;
+            LocalDateTime formattedNewEndTime = task.getEndTime();
+            for (int i = 0; i < detailHeader.size(); i++) {
+                switch(detailHeader.get(i)) {
+                case "from":
+                    newStartTime = detailContent.get(i).split(" ");
+                    formattedNewStartTime = LocalDateTime.parse(newStartTime[0] + "T" + newStartTime[1] + ":00");
+                    break;
+                case "to":
+                    newEndTime = detailContent.get(i).split(" ");
+                    formattedNewEndTime = LocalDateTime.parse(newEndTime[0] + "T" + newEndTime[1] + ":00");
+                    break;
+                default:
+                }
+            }
+
+            if (formattedNewEndTime.isBefore(formattedNewStartTime)) {
+                throw new MaryException("End date cannot be before start date!");
+            }
+
+            for (int i = 0; i < detailHeader.size(); i++) {
+                switch(detailHeader.get(i)) {
+                case "description":
+                    task.updateDescription(detailContent.get(i));
+                case "from":
+                    task.updateStartTime(formattedNewStartTime);
+                case "to":
+                    task.updateEndTime(formattedNewEndTime);
+                    break;
+                default:
+                }
+            }
+        } catch (DateTimeException e) {
+            throw new MaryException("Ensure your format for the dates are correct! Correct format: YYYY-MM-DD HH:MM");
+        } catch (IndexOutOfBoundsException e) {
+            throw new MaryException("Ensure your format for the dates are correct! Correct format: YYYY-MM-DD HH:MM");
+        }
+    }
+
+    private void splitUpdateArguments(ArrayList<String> detailHeader, ArrayList<String> detailContent, String[] updatedDetails) {
+        for (String arguments : updatedDetails) {
+            String[] argumentHeaderAndContent = arguments.split(" ", 2);
+            detailHeader.add(argumentHeaderAndContent[0]);
+            detailContent.add(argumentHeaderAndContent[1].trim());
+        }
+    }
+
+    private void checkUpdateValidity(String taskType, ArrayList<String> detailHeader) throws MaryException {
+        switch (taskType) {
+        case "T":
+            for (String header : detailHeader) {
+                if (!header.equals("description") || detailHeader.size() > 1) {
+                    throwTodoException();
+                }
+            }
+            break;
+        case "D":
+            for (String header : detailHeader) {
+                if ((!header.equals("description") && !header.equals("by")) || detailHeader.size() > 2) {
+                    throwDeadlineException();
+                }
+            }
+            break;
+        case "E":
+            for (String header : detailHeader) {
+                if ((!header.equals("description") && !header.equals("from") && !header.equals("to")) || detailHeader.size() > 3) {
+                    throwEventException();
+                }
+            }
+            break;
+        default:
+            throw new MaryException("Task file is corrupted!");
+        }
+    }
+
+    private void throwTodoException() throws MaryException {
+        throw new MaryException("Enter a valid field to update! "
+                + "Format: \"Update <number> /description <abc>\"");
+    }
+
+    private void throwDeadlineException() throws MaryException {
+        throw new MaryException("Enter a valid field to update! "
+                + "Format: \"Update <number> /description <abc> /by YYYY-MM-DD HH:MM");
+    }
+
+    private void throwEventException() throws MaryException {
+        throw new MaryException("Enter a valid field to update! "
+                + "Format: \"Update <number> /description <abc> /from YYYY-MM-DD HH:MM /to YYYY-MM-DD HH:MM");
     }
 }

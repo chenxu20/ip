@@ -56,4 +56,34 @@ public class Event extends Task {
         return "E|" + (super.printCompletionStatus() ? 1 : 0) + "|" + super.printName() + "|" + this.start + "|"
                 + this.end;
     }
+
+    @Override
+    public String taskType() {
+        return "E";
+    }
+
+    @Override
+    protected void updateStartTime(LocalDateTime newStart) {
+        this.start = newStart;
+    }
+
+    @Override
+    protected void updateEndTime(LocalDateTime newEnd) {
+        this.end = newEnd;
+    }
+
+    @Override
+    protected void updateDeadline(LocalDateTime newDeadline) {
+        return;
+    }
+
+    @Override
+    protected LocalDateTime getStartTime() {
+        return this.start;
+    }
+
+    @Override
+    protected LocalDateTime getEndTime() {
+        return this.end;
+    }
 }
