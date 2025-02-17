@@ -52,4 +52,34 @@ public class Deadline extends Task {
     public String writeTask() {
         return "D|" + (super.printCompletionStatus() ? 1 : 0) + "|" + super.printName() + "|" + this.deadline;
     }
+
+    @Override
+    public String taskType() {
+        return "D";
+    }
+
+    @Override
+    protected void updateDeadline(LocalDateTime newDeadline) {
+        this.deadline = newDeadline;
+    }
+
+    @Override
+    protected void updateStartTime(LocalDateTime newStart) {
+        return;
+    }
+
+    @Override
+    protected void updateEndTime(LocalDateTime newEnd) {
+        return;
+    }
+
+    @Override
+    protected LocalDateTime getStartTime() {
+        return null;
+    }
+
+    @Override
+    protected LocalDateTime getEndTime() {
+        return null;
+    }
 }

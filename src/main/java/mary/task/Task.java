@@ -1,5 +1,7 @@
 package mary.task;
 
+import java.time.LocalDateTime;
+
 /**
  * Stores the important fields to a task such as completion status and task
  * description.
@@ -65,8 +67,24 @@ public abstract class Task {
         return this.isCompleted;
     }
 
+    protected void updateDescription(String newDescription) {
+        this.taskName = newDescription;
+    }
+
     /**
      * Stores the details of the task in a specific format back into the file.
      */
     public abstract String writeTask();
+
+    public abstract String taskType();
+
+    protected abstract void updateDeadline(LocalDateTime newDeadline);
+
+    protected abstract void updateStartTime(LocalDateTime newStart);
+
+    protected abstract void updateEndTime(LocalDateTime newEnd);
+
+    protected abstract LocalDateTime getStartTime();
+
+    protected abstract LocalDateTime getEndTime();
 }

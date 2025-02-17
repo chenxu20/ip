@@ -61,8 +61,7 @@ public class Parser {
             response = taskList.addDeadlineTask(new Deadline(extractTaskDetails[0].trim(),
                 Constants.INCOMPLETE, deadline));
         } catch (DateTimeException e) {
-            System.out.println("Format of deadline is wrong!");
-            System.out.println("Format of task deadline: " + "\"deadline <task description> /by YYYY-MM-DD HH:MM\"");
+            throw new MaryException("Format of deadline is wrong! Format of task deadline: " + "\"deadline <task description> /by YYYY-MM-DD HH:MM\"");
         }
         assert response != null;
         return response;
@@ -101,12 +100,11 @@ public class Parser {
 
             response = taskList.addEventTask(new Event(extractTaskDetails[0].trim(), Constants.INCOMPLETE, start, end));
         } catch (DateTimeException e) {
-            System.out.println("Format of start or end date is wrong!");
-            System.out.println(
-                    "Format of event duration: \"event <event description> /from YYYY-MM-DD HH:MM "
-                            + "/to YYYY-MM-DD HH:MM\". "
-                            + "You can omit the end date if it is the same as the starting date, "
-                            + "but you cannot omit the end time!");
+            throw new MaryException("Format of start or end date is wrong!"
+                    + "Format of event duration: \"event <event description> /from YYYY-MM-DD HH:MM "
+                    + "/to YYYY-MM-DD HH:MM\". "
+                    + "You can omit the end date if it is the same as the starting date, "
+                    + "but you cannot omit the end time!");
         }
         assert response != null;
         return response;
@@ -166,5 +164,15 @@ public class Parser {
         startAndEndTime[1] = LocalDateTime.parse(endDate + "T" + endTime + ":00");
 
         return startAndEndTime;
+    }
+
+    public static String parseUpdateTask(String input, TaskList taskList) throws IndexOutOfBoundsException, NumberFormatException, MaryException {
+        String[] extractIndex = input.split(" ", 2);
+        String index = extractIndex[0];
+
+        String[] updatedDetails = extractIndex[1].split("/");
+        String response = taskList.updateTask(index, updatedDetails);
+
+        return response;
     }
 }

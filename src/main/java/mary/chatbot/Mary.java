@@ -98,18 +98,25 @@ public class Mary {
                 }
                 response = this.tasks.findTask(splitInput[1]);
                 break;
+            case "update":
+                if (splitInput.length < 2) {
+                    throw new MaryException("Key in which task you want to update!");
+                }
+                response = Parser.parseUpdateTask(splitInput[1], this.tasks);
+                storage.store(this.tasks);
+                break;
             default:
                 response = "Sorry I don't quite understand what you are saying, "
                         + "please use a different command!";
             }
         } catch (MaryException e) {
-            System.out.println(e.getMessage());
+            response = e.getMessage();
         } catch (IndexOutOfBoundsException e) {
-            System.out.println("There are no tasks at this position!");
+            response = "There are no tasks at this position!";
         } catch (NumberFormatException e) {
-            System.out.println("Enter a valid numerical index!");
+            response = "Enter a valid numerical index!";
         }
-        
+
         assert response != null;
         return response;
     }

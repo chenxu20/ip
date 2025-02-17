@@ -79,7 +79,7 @@ public class Storage {
      *
      * @param taskList Obtains TaskList containing list of tasks from the program.
      */
-    public void store(TaskList taskList) {
+    public void store(TaskList taskList) throws MaryException {
         try {
             FileWriter taskWriter = new FileWriter(this.taskFile);
             for (Task task : taskList.getTaskList()) {
@@ -87,7 +87,7 @@ public class Storage {
             }
             taskWriter.close();
         } catch (IOException e) {
-            System.out.println(e);
+            throw new MaryException(e.toString());
         }
     }
 }

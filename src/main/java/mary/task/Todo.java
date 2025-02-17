@@ -1,5 +1,7 @@
 package mary.task;
 
+import java.time.LocalDateTime;
+
 /**
  * Specific type of Task which is a Todo task.
  */
@@ -42,5 +44,35 @@ public class Todo extends Task {
     @Override
     public String writeTask() {
         return "T|" + (super.printCompletionStatus() ? 1 : 0) + "|" + super.printName();
+    }
+
+    @Override
+    public String taskType() {
+        return "T";
+    }
+
+    @Override
+    protected void updateDeadline(LocalDateTime newDeadline) {
+        return;
+    }
+
+    @Override
+    protected void updateStartTime(LocalDateTime newStart) {
+        return;
+    }
+
+    @Override
+    protected void updateEndTime(LocalDateTime newEnd) {
+        return;
+    }
+
+    @Override
+    protected LocalDateTime getStartTime() {
+        return null;
+    }
+
+    @Override
+    protected LocalDateTime getEndTime() {
+        return null;
     }
 }
