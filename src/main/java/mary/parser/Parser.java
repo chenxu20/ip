@@ -61,7 +61,8 @@ public class Parser {
             response = taskList.addDeadlineTask(new Deadline(extractTaskDetails[0].trim(),
                 Constants.INCOMPLETE, deadline));
         } catch (DateTimeException e) {
-            throw new MaryException("Format of deadline is wrong! Format of task deadline: " + "\"deadline <task description> /by YYYY-MM-DD HH:MM\"");
+            throw new MaryException("Format of deadline is wrong! Format of task deadline: "
+                + "\"deadline <task description> /by YYYY-MM-DD HH:MM\"");
         }
         assert response != null;
         return response;
@@ -135,7 +136,8 @@ public class Parser {
      * @return Array for LocalDateTime containing start and end time of the event
      * @throws MaryException If the format is incorrect
      */
-    private static LocalDateTime[] parseEventDateTime(String[] eventStartTime, String[] eventEndTime) throws MaryException {
+    private static LocalDateTime[] parseEventDateTime(String[] eventStartTime,
+            String[] eventEndTime) throws MaryException {
         LocalDateTime[] startAndEndTime = new LocalDateTime[2];
 
         if (eventStartTime.length != 3) {
@@ -147,7 +149,7 @@ public class Parser {
         String startDate = eventStartTime[1];
         String startTime = eventStartTime[2];
         startAndEndTime[0] = LocalDateTime.parse(startDate + "T" + startTime + ":00");
-        
+
         String endDate;
         String endTime;
         if (eventEndTime.length == 2) {
@@ -166,7 +168,17 @@ public class Parser {
         return startAndEndTime;
     }
 
-    public static String parseUpdateTask(String input, TaskList taskList) throws IndexOutOfBoundsException, NumberFormatException, MaryException {
+    /**
+     * Parses the input for updating tasks.
+     * @param input String containing task description and the deadline of the task.
+     * @param taskList An instance of the TaskList containing the list of tasks.
+     * @return Return the response for updating Task.
+     * @throws IndexOutOfBoundsException When input index is greater than the size of the list.
+     * @throws NumberFormatException When input is not an integer.
+     * @throws MaryException When there are other formatting errors.
+     */
+    public static String parseUpdateTask(String input, TaskList taskList)
+            throws IndexOutOfBoundsException, NumberFormatException, MaryException {
         String[] extractIndex = input.split(" ", 2);
         String index = extractIndex[0];
 

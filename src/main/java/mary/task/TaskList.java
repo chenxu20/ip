@@ -38,6 +38,8 @@ public class TaskList {
 
     /**
      * Informs user on the number of tasks in the list of tasks.
+     *
+     * @return Return a String containing number of tasks.
      */
     public String printNumberofTasks() {
         return "Now you have " + this.taskList.size() + " tasks in the list.";
@@ -45,6 +47,8 @@ public class TaskList {
 
     /**
      * Informs user that task has been added successfully.
+     *
+     * @return Return details of task.
      */
     public String printTask() {
         return "\n" + "Got it. I've added this task:\n" + taskList.get(taskList.size() - 1).toString()
@@ -68,6 +72,7 @@ public class TaskList {
      * Facilitates the marking of task as completed.
      *
      * @param input Index of the task to be marked.
+     * @return Response when task is marked.
      * @throws IndexOutOfBoundsException When the input index is greater than the
      *                                   size of the list.
      * @throws NumberFormatException     When the input is not an integer.
@@ -80,6 +85,7 @@ public class TaskList {
      * Facilitates the marking of task as incomplete.
      *
      * @param input Index of the task to be unmarked.
+     * @return Response when task is unmarked.
      * @throws IndexOutOfBoundsException When the input index is greater than the
      *                                   size of the list.
      * @throws NumberFormatException     When the input is not an integer.
@@ -92,6 +98,7 @@ public class TaskList {
      * Facilitates the adding of Todo task to the list of tasks.
      *
      * @param task To be added to the list.
+     * @return Response when a Todo Task is added.
      */
     public String addToDoTask(Task task) {
         this.taskList.add(task);
@@ -103,6 +110,7 @@ public class TaskList {
      * Facilitates the adding of Deadline task to the list of tasks.
      *
      * @param task To be added to the list.
+     * @return Response when a Deadline Task is added.
      */
     public String addDeadlineTask(Task task) {
         this.taskList.add(task);
@@ -114,6 +122,7 @@ public class TaskList {
      * Facilitates the adding of Event task to the list of tasks.
      *
      * @param task To be added to the list.
+     * @return Response when an Event Task is added.
      */
     public String addEventTask(Task task) {
         this.taskList.add(task);
@@ -125,6 +134,7 @@ public class TaskList {
      * Facilitates the deletion of task.
      *
      * @param input Index of the task to be deleted.
+     * @return Response when a task is deleted.
      * @throws IndexOutOfBoundsException When the input index is greater than the
      *                                   size of the list.
      * @throws NumberFormatException     When the input is not an integer.
@@ -143,6 +153,7 @@ public class TaskList {
      * Finds tasks whose description contains the exact input from user.
      *
      * @param input Keywords used by user to filter for tasks.
+     * @return Response when relevant tasks are found.
      */
     public String findTask(String input) {
         String response = "Here are the matching tasks in your list:\n";
@@ -156,8 +167,17 @@ public class TaskList {
         return response;
     }
 
+    /**
+     * Point of entry to updating a specific task, cannot update task to another type
+     * @param index Index of the task to be updated.
+     * @param updatedDetails Updated details for the task.
+     * @return Response when task is updated successfully.
+     * @throws IndexOutOfBoundsException When input index is greater than the size of the list.
+     * @throws NumberFormatException When input is not an integer.
+     * @throws MaryException When there are other formatting errors.
+     */
     public String updateTask(String index, String[] updatedDetails)
-        throws IndexOutOfBoundsException, NumberFormatException, MaryException {
+            throws IndexOutOfBoundsException, NumberFormatException, MaryException {
         int taskIndex = Integer.parseInt(index);
         Task taskToBeUpdated = this.taskList.get(taskIndex - 1);
         String taskType = taskToBeUpdated.taskType();
@@ -182,14 +202,28 @@ public class TaskList {
         default:
         }
 
-        return "Successfully updated task!\n" + "Updated Task: " + taskToBeUpdated.toString(); 
+        return "Successfully updated task!\n" + "Updated Task: " + taskToBeUpdated.toString();
     }
 
+    /**
+     * Updates a Todo Task.
+     * @param task Task that needs to be updated.
+     * @param detailHeader Header of the detail to be updated.
+     * @param detailContent Content of the detail to input.
+     */
     private void updateTodoTask(Task task, ArrayList<String> detailHeader, ArrayList<String> detailContent) {
         task.updateDescription(detailContent.get(0));
     }
 
-    private void updateDeadlineTask(Task task, ArrayList<String> detailHeader, ArrayList<String> detailContent) throws MaryException {
+    /**
+     * Updates a Deadline Task.
+     * @param task Task that needs to be updated.
+     * @param detailHeader Header of the detail to be updated.
+     * @param detailContent Content of the detail to input.
+     * @throws MaryException When there are formatting errors.
+     */
+    private void updateDeadlineTask(Task task, ArrayList<String> detailHeader,
+            ArrayList<String> detailContent) throws MaryException {
         try {
             String[] newDeadline;
             LocalDateTime formattedNewDeadline;
@@ -223,7 +257,15 @@ public class TaskList {
         }
     }
 
-    private void updateEventTask(Task task, ArrayList<String> detailHeader, ArrayList<String> detailContent) throws MaryException {
+    /**
+     * Updates an Event Task.
+     * @param task Task that needs to be updated.
+     * @param detailHeader Header of the detail to be updated.
+     * @param detailContent Content of the detail to input.
+     * @throws MaryException When there are formatting errors.
+     */
+    private void updateEventTask(Task task, ArrayList<String> detailHeader,
+            ArrayList<String> detailContent) throws MaryException {
         try {
             String[] newStartTime;
             LocalDateTime formattedNewStartTime = task.getStartTime();
@@ -252,8 +294,10 @@ public class TaskList {
                 switch(detailHeader.get(i)) {
                 case "description":
                     task.updateDescription(detailContent.get(i));
+                    break;
                 case "from":
                     task.updateStartTime(formattedNewStartTime);
+                    break;
                 case "to":
                     task.updateEndTime(formattedNewEndTime);
                     break;
@@ -267,7 +311,14 @@ public class TaskList {
         }
     }
 
-    private void splitUpdateArguments(ArrayList<String> detailHeader, ArrayList<String> detailContent, String[] updatedDetails) {
+    /**
+     * Splits input into its corresponding header and content.
+     * @param detailHeader Contains the different headers to be updated.
+     * @param detailContent Contains the content to be updated.
+     * @param updatedDetails Contains the headers and the content to be updated.
+     */
+    private void splitUpdateArguments(ArrayList<String> detailHeader,
+            ArrayList<String> detailContent, String[] updatedDetails) {
         for (String arguments : updatedDetails) {
             String[] argumentHeaderAndContent = arguments.split(" ", 2);
             detailHeader.add(argumentHeaderAndContent[0]);
@@ -275,6 +326,12 @@ public class TaskList {
         }
     }
 
+    /**
+     * Checks whether the update is valid. Checks if the task type and headers are right.
+     * @param taskType Task type of the task at the index.
+     * @param detailHeader Checks whether header is valid.
+     * @throws MaryException When there are formatting errors.
+     */
     private void checkUpdateValidity(String taskType, ArrayList<String> detailHeader) throws MaryException {
         switch (taskType) {
         case "T":
@@ -293,7 +350,8 @@ public class TaskList {
             break;
         case "E":
             for (String header : detailHeader) {
-                if ((!header.equals("description") && !header.equals("from") && !header.equals("to")) || detailHeader.size() > 3) {
+                if ((!header.equals("description") && !header.equals("from") && !header.equals("to"))
+                    || detailHeader.size() > 3) {
                     throwEventException();
                 }
             }
@@ -303,16 +361,28 @@ public class TaskList {
         }
     }
 
+    /**
+     * Throws an exception when task type is incompatible.
+     * @throws MaryException When the task type is incompatible.
+     */
     private void throwTodoException() throws MaryException {
         throw new MaryException("Enter a valid field to update! "
                 + "Format: \"Update <number> /description <abc>\"");
     }
 
+    /**
+     * Throws an exception when task type is incompatible.
+     * @throws MaryException When the task type is incompatible.
+     */
     private void throwDeadlineException() throws MaryException {
         throw new MaryException("Enter a valid field to update! "
                 + "Format: \"Update <number> /description <abc> /by YYYY-MM-DD HH:MM");
     }
 
+    /**
+     * Throws an exception when task type is incompatible.
+     * @throws MaryException When the task type is incompatible.
+     */
     private void throwEventException() throws MaryException {
         throw new MaryException("Enter a valid field to update! "
                 + "Format: \"Update <number> /description <abc> /from YYYY-MM-DD HH:MM /to YYYY-MM-DD HH:MM");
