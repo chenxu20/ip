@@ -1,6 +1,8 @@
 # Mary User Guide
 
 Mary is a graphical user interface (GUI) task manager bot designed to help you organize your tasks efficiently. It supports various features to manage your to-dos, deadlines and events while providing easy way to track and find tasks.
+![image](https://github.com/user-attachments/assets/173f89fc-e65e-490c-9c4a-5cf3c82f3dab)
+
 
 ## Getting started
 
@@ -35,7 +37,12 @@ Mary is a graphical user interface (GUI) task manager bot designed to help you o
 - Format: mark "task_number"
 - Format: unmark "task_number"
 
-### 7. Edit
-- Edit details of a task on the list currently
-- Format: edit "task_number" /"task detail header" "task detail content"
-- e.g. edit 2 /by 2023-11-01 01:01
+### 7. Update
+- Update details of a task on the list currently
+- Format: update "task_number" /"task detail header" "task detail content"
+- e.g. update 2 /by 2023-11-01 01:01
+
+> [!TIP]
+> You can update task details without following any strict orders.
+> Command names are non-case sensitive
+> Date must follow this format: yyyy-MM-dd HH:MM
