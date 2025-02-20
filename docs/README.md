@@ -13,18 +13,18 @@ Mary is a graphical user interface (GUI) task manager bot designed to help you o
 ## Features
 ### 1. Todo
 - Adds a simple task without any date.
-- Format: todo <description>
+- Format: todo "description"
 
 ### 2. Deadline
 - Adds a task with a due date.
-- Format: deadline <description> /by <yyyy-MM-dd HH:MM>
+- Format: deadline "description" /by "yyyy-MM-dd HH:MM"
 ### 3. Event
 - Adds an event with a scheduled start and end date.
-- Format: todo <description> /from <yyyy-MM-dd HH:MM> /to <yyyy-MM-dd HH:MM>
+- Format: todo "description" /from "yyyy-MM-dd HH:MM" /to "yyyy-MM-dd HH:MM"
 
 ### 4. Find
 - Search for tasks containing a specific keywords.
-- Format: find <keyword>
+- Format: find "keyword"
 
 ### 5. List
 - Displays all tasks in your list.
@@ -32,10 +32,10 @@ Mary is a graphical user interface (GUI) task manager bot designed to help you o
 
 ### 6. Mark/Unmark
 - Mark or unmark a task as complete or not complete.
-- Format: mark <task_number>
-- Format: unmark <task_number>
+- Format: mark "task_number"
+- Format: unmark "task_number"
 
 ### 7. Edit
 - Edit details of a task on the list currently
-- Format: edit <task_number >/<task detail header> <task detail content>
+- Format: edit "task_number" /"task detail header" "task detail content"
 - e.g. edit 2 /by 2023-11-01 01:01
