@@ -1,30 +1,20 @@
-# Duke User Guide
+# Mary User Guide
 
-// Update the title above to match the actual product name
+Mary is a graphical user interface (GUI) task manager bot designed to help you organize your tasks efficiently. It supports various features to manage your to-dos, deadlines and events while providing easy way to track and find tasks.
 
-// Product screenshot goes here
+## Getting started
 
-// Product intro goes here
+1. Ensure that you have Java 17 or above installed.
+2. Download the latest .jar file from [here](https://github.com/chenxu20/ip/releases/tag/Level-10).
+3. Copy the file to the folder you want to put the jar file in.
+4. Run the application using this command java -jar mary.jar
+5. You should be greeted with popup window with Mary inside.
 
-## Adding deadlines
-
-// Describe the action and its outcome.
-
-// Give examples of usage
-
-Example: `keyword (optional arguments)`
-
-// A description of the expected outcome goes here
-
-```
-expected output
-```
-
-## Feature ABC
-
-// Feature details
-
-
-## Feature XYZ
-
-// Feature details
+## Features
+### 1. Todo
+### 2. Deadline
+### 3. Event
+### 4. Find
+### 5. List
+### 6. Mark/Unmark
+### 7. Edit
